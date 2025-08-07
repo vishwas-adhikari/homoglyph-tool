@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homoglyph Toolkit - Detect & Generate Lookalike Domains</title>
+    
+    <!-- Link to the external CSS file -->
+    <link rel="stylesheet" href="{% static 'homoglyph_app/css/style.css' %}">
+    
+    <!-- Link to Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Homoglyph Toolkit</h1>
+            <p class="tagline">Detect & Generate Lookalike Domains</p>
+        </div>
+
+        <div class="tabs">
+            <button id="tab-detector" class="tab active">Detector</button>
+            <button id="tab-generator" class="tab">Generator</button>
+        </div>
+
+        <div id="detector" class="section">
+            <div class="input-group">
+                <label for="detector-input">Domain Analysis</label>
+                <input type="text" id="detector-input" class="input-field" placeholder="Enter a domain or URL to analyze...">
+            </div>
+            <button id="detector-btn" class="btn">Analyze Domain</button>
+            <div id="detector-results" class="results"></div>
+        </div>
+
+        <div id="generator" class="section hidden">
+            <div class="input-group">
+                <label for="generator-input">Domain Spoofing</label>
+                <input type="text" id="generator-input" class="input-field" placeholder="Enter a domain to spoof (e.g., paypal.com)">
+            </div>
+            <button id="generator-btn" class="btn">Generate Variants</button>
+            <div id="generator-results" class="results"></div>
+
+            <!-- URL Shortener is part of the Generator flow -->
+            <div id="shortener-section" class="input-group" style="margin-top: 3rem; display: none;">
+                <label for="shorten-input">Shorten Generated URL</label>
+                <input type="text" id="shorten-input" class="input-field" placeholder="A generated URL will appear here...">
+            </div>
+            <button id="shortener-btn" class="btn" style="display: none;">Shorten</button>
+            <div id="shortener-results" class="results"></div>
+        </div>
+    </div>
+
+    <!-- Link to the external JavaScript file -->
+    <script src="{% static 'homoglyph_app/js/main.js' %}"></script>
+</body>
+</html>
