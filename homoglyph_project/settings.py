@@ -73,7 +73,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'homoglyph_project.wsgi'    # Correct
+WSGI_APPLICATION = 'homoglyph_project.wsgi.application'
+    # Correct
 
 
 # Database

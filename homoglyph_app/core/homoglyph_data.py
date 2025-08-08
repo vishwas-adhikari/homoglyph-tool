@@ -1,62 +1,74 @@
 import os
 
-# These dictionaries will be populated at startup and will hold our master lists.
-# They will be imported and used by our detector and generator utilities.
+# --- The Source of Truth ---
+# This set contains all characters we consider standard and "safe".
+SAFE_ASCII_CHARS = set("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-.")
+
+# --- Global Dictionaries ---
+# These will be populated by our new, robust loading logic.
 HOMOGLYPH_MAP = {}
 CANONICAL_MAP = {}
 
 def load_data_from_file():
     """
-    Parses char_codes.txt once at startup.
-    It reads the hex codes, converts them to characters, and populates two
-    master dictionaries for instant lookups later.
+    Parses char_codes.txt with a robust, two-pass strategy to ensure
+    the canonical map is always correct, regardless of the data file's structure.
     """
-    # Ensure we are using the global variables to populate them.
     global HOMOGLYPH_MAP, CANONICAL_MAP
 
-    # Build a reliable path to the data file, starting from this file's location.
     file_path = os.path.join(os.path.dirname(__file__), '..', 'data', 'char_codes.txt')
-
-    print("INFO:    Loading homoglyph data from:", file_path)
+    print("INFO:    Loading homoglyph data with new ROBUST strategy...")
 
     try:
         with open(file_path, 'r', encoding='utf-8') as f:
+            all_lines_as_chars = []
+            
+            # --- Pass 1: Read all data into memory ---
+            # Convert all hex codes to characters for easier processing.
             for line in f:
-                # Ignore comments and empty lines
                 if line.startswith('#') or not line.strip():
                     continue
-
-                # Split the line by commas to get the hex codes
                 codes = line.strip().split(',')
-                
-                # Convert all hex codes to actual characters, handling potential errors
                 characters = []
                 for code in codes:
                     try:
-                        # Convert hex string (base 16) to an integer, then to a character
                         characters.append(chr(int(code.strip(), 16)))
                     except ValueError:
-                        # Log an error if a code is malformed, but don't crash.
-                        print(f"WARNING: Skipping malformed hex code '{code}' in data file.")
                         continue
+                if characters:
+                    all_lines_as_chars.append(characters)
+
+            # --- Pass 2: Build the Perfect Canonical Map ---
+            # This is the most critical part of the logic.
+            
+            # First, map every safe character to itself. This is the default.
+            for char in SAFE_ASCII_CHARS:
+                CANONICAL_MAP[char] = char
+            
+            # Now, for each homoglyph group from the file...
+            for group in all_lines_as_chars:
+                # Find the single "safe" character in this group, if one exists.
+                safe_char_in_group = None
+                for char in group:
+                    if char in SAFE_ASCII_CHARS:
+                        safe_char_in_group = char
+                        break
                 
-                if not characters:
-                    continue
-
-                # The first character on the line is the "canonical" representation
-                canonical_char = characters[0]
-
-                # Populate our two master maps
-                for char in characters:
-                    # Map every character back to its canonical form (for the detector)
-                    CANONICAL_MAP[char] = canonical_char
-                    # Map every character to the full list of its siblings (for the generator)
-                    HOMOGLYPH_MAP[char] = characters
+                # If we found a safe character (e.g., 'o' in a group with 'о', 'ο')...
+                if safe_char_in_group:
+                    # Map all OTHER (unsafe) characters in that group to this one safe character.
+                    for char in group:
+                        if char != safe_char_in_group:
+                            CANONICAL_MAP[char] = safe_char_in_group
+            
+            # --- Pass 3: Build the Homoglyph Map (for the Generator) ---
+            # This part can remain simple.
+            for group in all_lines_as_chars:
+                for char in group:
+                    HOMOGLYPH_MAP[char] = group
 
         print("INFO:    Homoglyph data loaded successfully.")
     
     except FileNotFoundError:
         print("ERROR:   The data file 'char_codes.txt' was not found!")
-        print("ERROR:   Please ensure the file exists at:", file_path)
-        # We raise an exception to stop the server from starting without its data.
         raise
