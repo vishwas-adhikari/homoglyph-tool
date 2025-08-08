@@ -2,10 +2,10 @@
 
 <p align="center">
   <img src="https://github.com/vishwas-adhikari/homoglyph-tool/blob/main/poc-ss/HomePage.jpg" alt="Home Page" width="300">
-  <img src="https://github.com/vishwas-adhikari/homoglyph-tool/blob/main/poc-ss/Detector.jpg" alt="Detector Page" width="300">
-  <img src="https://github.com/vishwas-adhikari/homoglyph-tool/blob/main/poc-ss/Generator.jpg" alt="Generator Page" width="300">
-  <img src="https://github.com/vishwas-adhikari/homoglyph-tool/blob/main/poc-ss/Shortener.jpg" alt="Shortener Page" width="300">
-  <img src="https://github.com/vishwas-adhikari/homoglyph-tool/blob/main/poc-ss/Analysis.jpg" alt="Analysis Result" width="300">
+  <img src="https://github.com/vishwas-adhikari/homoglyph-tool/blob/main/poc-ss/detector.jpg" alt="Detector" width="300">
+  <img src="https://github.com/vishwas-adhikari/homoglyph-tool/blob/main/poc-ss/safedetection.jpg" alt="Safe Detection" width="300">
+  <img src="https://github.com/vishwas-adhikari/homoglyph-tool/blob/main/poc-ss/Generator.jpg" alt="Generator" width="300">
+  <img src="https://github.com/vishwas-adhikari/homoglyph-tool/blob/main/poc-ss/shortner.jpg" alt="Shortener" width="300">
 </p>
 
 A powerful, web-based cybersecurity tool built with Django and Python to both **detect** and **generate** homoglyph domain attacks. This toolkit serves as a practical resource for security analysts, penetration testers, and anyone interested in understanding the deceptive nature of lookalike domains used in phishing attacks.
