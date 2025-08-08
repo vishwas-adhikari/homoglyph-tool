@@ -76,3 +76,35 @@ Follow these steps to run the Homoglyph Toolkit locally.
 ```bash
 git clone https://github.com/YourUsername/homoglyph-toolkit-django.git
 cd homoglyph-toolkit-django
+```
+
+###3️⃣ Create & Activate Virtual Environment
+
+```bash
+python -m venv venv
+venv\Scripts\activate
+```
+
+###4️⃣ Install Dependencies
+```bash
+pip install -r requirements.txt
+```
+
+###5️⃣ Build the Homoglyph Map (One-time)
+```bash
+python build_map.py
+```
+###6️⃣ Set Up Database 
+```bash
+python manage.py migrate
+```
+###7️⃣ Run Development Server
+```bash
+python manage.py runserver
+```
+###8️⃣ Open in Browser ---> http://127.0.0.1:8000
+
+
+You should now see the Homoglyph Toolkit running locally! 🎉
+
+
