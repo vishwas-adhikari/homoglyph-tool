@@ -12,7 +12,6 @@ A powerful, web-based cybersecurity tool built with Django and Python to both **
 <p align="center">
   <img src="Screenshots-POC/Generator.jpg" alt="Generator" width="300">
   <img src="Screenshots-POC/shortner.jpg" alt="Shortener" width="300">
-  <img src="Screenshots-POC/CodeSnippet.jpg" alt="Code Snippet" width="300">
 </p>
 
 
