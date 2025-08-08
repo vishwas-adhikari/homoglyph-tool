@@ -1,18 +1,20 @@
 # Homoglyph Toolkit – A Cybersecurity Web Application
 
-<p align="center">
-  <img src="poc-ss/HomePage.jpg" alt="Home Page" width="300">
-  <img src="poc-ss/detector.jpg" alt="Detector" width="300">
-  <img src="poc-ss/safedetection.jpg" alt="Safe Detection" width="300">
-</p>
-
-<p align="center">
-  <img src="poc-ss/Generator.jpg" alt="Generator" width="300">
-  <img src="poc-ss/shortner.jpg" alt="Shortener" width="300">
-</p>
-
 
 A powerful, web-based cybersecurity tool built with Django and Python to both **detect** and **generate** homoglyph domain attacks. This toolkit serves as a practical resource for security analysts, penetration testers, and anyone interested in understanding the deceptive nature of lookalike domains used in phishing attacks.
+
+<p align="center">
+  <img src="Screenshots-POC/HomePage.jpg" alt="Home Page" width="300">
+  <img src="Screenshots-POC/detector.jpg" alt="Detector" width="300">
+  <img src="Screenshots-POC/safedetection.jpg" alt="Safe Detection" width="300">
+</p>
+
+<p align="center">
+  <img src="Screenshots-POC/Generator.jpg" alt="Generator" width="300">
+  <img src="Screenshots-POC/shortner.jpg" alt="Shortener" width="300">
+  <img src="Screenshots-POC/CodeSnippet.jpg" alt="Code Snippet" width="300">
+</p>
+
 
 ---
 
