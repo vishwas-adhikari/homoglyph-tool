@@ -1,55 +1,66 @@
 import difflib
-import idna
+import unicodedata
+
 from homoglyph_app.core.homoglyph_data import CANONICAL_MAP
 
-def detect_homoglyphs(domain: str, known_legit_domain: str = None) -> dict:
+# List of invisible characters to be removed.
+ZERO_WIDTH_CHARS = [
+    "\u200B",  # Zero Width Space
+    "\u200C",  # Zero Width Non-Joiner
+    "\u200D",  # Zero Width Joiner
+    "\uFEFF",  # Zero Width No-Break Space
+    "\u00AD",  # Soft Hyphen
+]
+
+def detect_homoglyphs(domain: str) -> dict:
     """
-    Detects homoglyphs in a domain and reports suspicious characters.
-    This version includes Punycode decoding, case normalization, and optional
-    comparison against a known legitimate domain for a more accurate analysis.
+    Detects homoglyphs using a multi-stage cleaning and normalization process
+    to handle a wide range of obfuscation techniques.
     """
-    try:
-        # 1. Decode punycode if present (e.g., 'xn--...' -> Unicode)
-        domain_unicode = idna.decode(domain)
-    except idna.IDNAError:
-        # If it's not a valid punycode string, use the original domain.
-        domain_unicode = domain
+    original_input = domain
 
-    # 2. Normalize case (domains are case-insensitive)
-    domain_lower = domain_unicode.lower()
+    # --- STAGE 1: Aggressive Compatibility Normalization (NFKC) ---
+    # This is the most important step. It handles a huge range of tricks:
+    # - It separates characters from their combining marks (like accents) and often discards the marks.
+    # - It converts many lookalike characters to their simple ASCII equivalents.
+    # - It changes characters like 'ﬁ' into 'f' and 'i'.
+    # Example: 'n' + '`' (U+0300) -> 'n'
+    # Example: 'ɡ' (U+0261) -> 'g'
+    normalized_form = unicodedata.normalize('NFKC', domain)
+    
+    # --- STAGE 2: Remove Invisible Characters ---
+    # After normalization, we strip out any remaining zero-width characters.
+    for zw in ZERO_WIDTH_CHARS:
+        normalized_form = normalized_form.replace(zw, "")
 
-    # 3. Canonical mapping replacement using our pre-built map.
-    normalized_domain = "".join([CANONICAL_MAP.get(ch, ch) for ch in domain_lower])
-
-    # 4. Determine if the domain is suspicious.
-    is_suspicious = (domain_lower != normalized_domain)
+    # --- STAGE 3: Final Canonical Mapping ---
+    # We run our custom canonical map on the already-normalized string.
+    # This handles any homoglyphs that NFKC didn't catch (e.g., Cyrillic 'а' -> Latin 'a').
+    final_canonical_domain = "".join([CANONICAL_MAP.get(char, char) for char in normalized_form])
+    
+    # --- The Final Decision ---
+    # We compare the fully cleaned string to the original input.
+    # We also lowercase both to ensure the comparison is case-insensitive.
+    is_suspicious = (final_canonical_domain.lower() != original_input.lower())
 
     suspicious_chars_found = []
     if is_suspicious:
-        # Use zip for a safe, parallel iteration.
-        for orig_char, norm_char in zip(domain_lower, normalized_domain):
-            if orig_char != norm_char:
+        # For reporting, we can show the difference between the NFKC form and the final canonical form.
+        # This gives a clearer indication of what was changed.
+        for i in range(min(len(normalized_form), len(final_canonical_domain))):
+            if normalized_form[i] != final_canonical_domain[i]:
                 suspicious_chars_found.append({
-                    'original': orig_char,
-                    'canonical': norm_char,
-                    'codepoint': f'U+{ord(orig_char):04X}'
+                    'original': normalized_form[i],
+                    'canonical': final_canonical_domain[i],
+                    'codepoint': f'U+{ord(normalized_form[i]):04X}'
                 })
-
-    # 5. Calculate a more meaningful similarity score.
-    # If a known target is provided, use it. Otherwise, fall back to the normalized domain.
-    if known_legit_domain:
-        target = known_legit_domain.lower()
-    else:
-        target = normalized_domain
-
-    similarity_score = difflib.SequenceMatcher(None, domain_lower, target).ratio()
+    
+    similarity_score = difflib.SequenceMatcher(None, original_input, final_canonical_domain).ratio()
 
     return {
         'is_suspicious': is_suspicious,
-        'input_domain': domain_unicode, # Return the nice Unicode version
-        'normalized_domain': normalized_domain,
+        'input_domain': original_input,
+        'normalized_domain': final_canonical_domain,
         'similarity_score': f"{similarity_score:.0%}",
         'suspicious_chars': suspicious_chars_found
     }
-
-
