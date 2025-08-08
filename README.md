@@ -1,6 +1,12 @@
 # Homoglyph Toolkit – A Cybersecurity Web Application
 
-![Homoglyph Toolkit Demo](https://github.com/vishwas-adhikari/homoglyph-tool/blob/main/poc-ss/HomePage.jpg) <!-- It's highly recommended to replace this with a URL to one of your screenshots -->
+<p align="center">
+  <img src="https://github.com/vishwas-adhikari/homoglyph-tool/blob/main/poc-ss/HomePage.jpg" alt="Home Page" width="300">
+  <img src="https://github.com/vishwas-adhikari/homoglyph-tool/blob/main/poc-ss/Detector.jpg" alt="Detector Page" width="300">
+  <img src="https://github.com/vishwas-adhikari/homoglyph-tool/blob/main/poc-ss/Generator.jpg" alt="Generator Page" width="300">
+  <img src="https://github.com/vishwas-adhikari/homoglyph-tool/blob/main/poc-ss/Shortener.jpg" alt="Shortener Page" width="300">
+  <img src="https://github.com/vishwas-adhikari/homoglyph-tool/blob/main/poc-ss/Analysis.jpg" alt="Analysis Result" width="300">
+</p>
 
 A powerful, web-based cybersecurity tool built with Django and Python to both **detect** and **generate** homoglyph domain attacks. This toolkit serves as a practical resource for security analysts, penetration testers, and anyone interested in understanding the deceptive nature of lookalike domains used in phishing attacks.
 
@@ -38,8 +44,6 @@ A utility to "weaponize" generated domains for controlled phishing simulations:
 
 ## 🛠️ Tech Stack & Architecture
 
-This project is built on a clean, maintainable, and robust architecture.
-
 | Layer         | Technology / Library                                       |
 |---------------|------------------------------------------------------------|
 | **Language**  | Python 3.11+                                               |
@@ -49,14 +53,11 @@ This project is built on a clean, maintainable, and robust architecture.
 | **Frontend**  | Plain HTML, CSS, and JavaScript (No frameworks)            |
 | **Database**  | SQLite 3 (Default for Django)                              |
 
-### Architecture Highlights
 The core of this application is a **pre-compiled, curated data map**. A standalone Python script (`build_map.py`) processes a raw list of Unicode characters and generates a clean `homoglyph_map.json`. The Django application loads this perfect map at startup, ensuring high performance and reliability.
 
 ---
 
 ## 🚀 Getting Started: Local Setup & Installation
-
-Follow these steps to get the Homoglyph Toolkit running on your local machine.
 
 **1. Clone the Repository**
 ```bash
