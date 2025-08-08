@@ -1,6 +1,6 @@
 # Homoglyph Toolkit – A Cybersecurity Web Application
 
-![Homoglyph Toolkit Demo](https://i.imgur.com/your-screenshot-url.png) <!-- It's highly recommended to replace this with a URL to one of your screenshots -->
+![Homoglyph Toolkit Demo](https://github.com/vishwas-adhikari/homoglyph-tool/blob/main/poc-ss/HomePage.jpg) <!-- It's highly recommended to replace this with a URL to one of your screenshots -->
 
 A powerful, web-based cybersecurity tool built with Django and Python to both **detect** and **generate** homoglyph domain attacks. This toolkit serves as a practical resource for security analysts, penetration testers, and anyone interested in understanding the deceptive nature of lookalike domains used in phishing attacks.
 
