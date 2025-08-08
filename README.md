@@ -35,13 +35,13 @@ A robust analysis engine that inspects a domain for multiple types of visual dec
 *   **Punycode Awareness:** Automatically decodes Punycode domains (`xn--...`) to analyze their true Unicode form.
 *   **Similarity Scoring:** Provides a percentage score to quickly gauge how closely a domain resembles its normalized form.
 
-### 2. 🧪 Homoglyph Generator
+### 2. 🛡️ Homoglyph Generator
 An offensive security tool for training, awareness, and red team simulations:
 *   **Realistic Variants:** Generates a curated list of high-impact, visually deceptive domain variants from a legitimate input.
 *   **Curated Mapping:** Uses a custom, expert-curated JSON map that focuses on the most effective and common character swaps seen in real-world attacks.
 *   **Multi-Type Swaps:** Includes not just Unicode homoglyphs but also common visual tricks like `l` → `1`, `o` → `0`, `s` → `$`, and `m` → `rn`.
 
-### 3. 🔗 URL Shortener
+### 3. 🛡️ URL Shortener
 A utility to "weaponize" generated domains for controlled phishing simulations:
 *   **One-Click Shortening:** Seamlessly shorten any generated lookalike domain using the TinyURL API.
 *   **Integrated Workflow:** Allows for a complete red team workflow, from generating a deceptive domain to creating a ready-to-use shortened link for campaigns.
@@ -65,7 +65,14 @@ The core of this application is a **pre-compiled, curated data map**. A standalo
 
 ## 🚀 Getting Started: Local Setup & Installation
 
-**1. Clone the Repository**
+Follow these steps to run the Homoglyph Toolkit locally.
+
+### 1️⃣ Prerequisites
+- [Python 3.10+](https://www.python.org/downloads/)
+- [Git](https://git-scm.com/downloads/)
+- Terminal or Command Prompt
+
+### 2️⃣ Clone the Repository
 ```bash
 git clone https://github.com/YourUsername/homoglyph-toolkit-django.git
 cd homoglyph-toolkit-django
