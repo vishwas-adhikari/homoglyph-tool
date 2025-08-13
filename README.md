@@ -1,18 +1,19 @@
 # Homoglyph Toolkit – A Cybersecurity Web Application
 
-<p align="center">
-  <img src="poc-ss/HomePage.jpg" alt="Home Page" width="300">
-  <img src="poc-ss/detector.jpg" alt="Detector" width="300">
-  <img src="poc-ss/safedetection.jpg" alt="Safe Detection" width="300">
-</p>
-
-<p align="center">
-  <img src="poc-ss/Generator.jpg" alt="Generator" width="300">
-  <img src="poc-ss/shortner.jpg" alt="Shortener" width="300">
-</p>
-
 
 A powerful, web-based cybersecurity tool built with Django and Python to both **detect** and **generate** homoglyph domain attacks. This toolkit serves as a practical resource for security analysts, penetration testers, and anyone interested in understanding the deceptive nature of lookalike domains used in phishing attacks.
+
+<p align="center">
+  <img src="Screenshots-POC/HomePage.jpg" alt="Home Page" width="300">
+  <img src="Screenshots-POC/detector.jpg" alt="Detector" width="300">
+  <img src="Screenshots-POC/safedetection.jpg" alt="Safe Detection" width="300">
+</p>
+
+<p align="center">
+  <img src="Screenshots-POC/Generator.jpg" alt="Generator" width="300">
+  <img src="Screenshots-POC/shortner.jpg" alt="Shortener" width="300">
+</p>
+
 
 ---
 
@@ -33,13 +34,13 @@ A robust analysis engine that inspects a domain for multiple types of visual dec
 *   **Punycode Awareness:** Automatically decodes Punycode domains (`xn--...`) to analyze their true Unicode form.
 *   **Similarity Scoring:** Provides a percentage score to quickly gauge how closely a domain resembles its normalized form.
 
-### 2. 🧪 Homoglyph Generator
+### 2. 🛡️ Homoglyph Generator
 An offensive security tool for training, awareness, and red team simulations:
 *   **Realistic Variants:** Generates a curated list of high-impact, visually deceptive domain variants from a legitimate input.
 *   **Curated Mapping:** Uses a custom, expert-curated JSON map that focuses on the most effective and common character swaps seen in real-world attacks.
 *   **Multi-Type Swaps:** Includes not just Unicode homoglyphs but also common visual tricks like `l` → `1`, `o` → `0`, `s` → `$`, and `m` → `rn`.
 
-### 3. 🔗 URL Shortener
+### 3. 🛡️ URL Shortener
 A utility to "weaponize" generated domains for controlled phishing simulations:
 *   **One-Click Shortening:** Seamlessly shorten any generated lookalike domain using the TinyURL API.
 *   **Integrated Workflow:** Allows for a complete red team workflow, from generating a deceptive domain to creating a ready-to-use shortened link for campaigns.
@@ -63,7 +64,46 @@ The core of this application is a **pre-compiled, curated data map**. A standalo
 
 ## 🚀 Getting Started: Local Setup & Installation
 
-**1. Clone the Repository**
+Follow these steps to run the Homoglyph Toolkit locally.
+
+### 1. Prerequisites
+- [Python 3.10+](https://www.python.org/downloads/)
+- [Git](https://git-scm.com/downloads/)
+- Terminal or Command Prompt
+
+### 2. Clone the Repository
 ```bash
 git clone https://github.com/YourUsername/homoglyph-toolkit-django.git
 cd homoglyph-toolkit-django
+```
+
+### 3. Create & Activate Virtual Environment
+
+```bash
+python -m venv venv
+venv\Scripts\activate
+```
+
+### 4. Install Dependencies
+```bash
+pip install -r requirements.txt
+```
+
+### 5. Build the Homoglyph Map (One-time)
+```bash
+python build_map.py
+```
+### 6. Set Up Database 
+```bash
+python manage.py migrate
+```
+### 7. Run Development Server
+```bash
+python manage.py runserver
+```
+### 8. Open in Browser ---> http://127.0.0.1:8000
+
+
+You should now see the Homoglyph Toolkit running locally! 🎉
+
+
