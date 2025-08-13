@@ -14,4 +14,6 @@ urlpatterns = [
     path('api/generate/', views.creation_api, name='api_generate'),
 
     path('api/shorten/', views.shorten_api, name='api_shorten'),
+
+    path('r/<str:short_code>/', views.redirect_view, name='redirect'),
 ]

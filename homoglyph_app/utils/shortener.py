@@ -1,32 +1,28 @@
-import requests
-from urllib.parse import urlparse, urlunparse
+import random
+import string
 
-TINYURL_API_ENDPOINT = "http://tinyurl.com/api-create.php"
+# Import our new database model.
+from homoglyph_app.models import ShortURL
 
-def shorten_url(url_to_shorten: str) -> str:
-    if not url_to_shorten.startswith(('http://', 'https://')):
-        url_to_shorten = f"http://{url_to_shorten}"
+# Define the character set for our short codes.
+CHARS = string.ascii_letters + string.digits
+CODE_LENGTH = 6 # We can make our codes 6 characters long.
 
-    try:
-        # Parse the URL into components
-        parsed_url = urlparse(url_to_shorten)
+def create_short_code() -> str:
+    """
+    Generates a unique, random short code of a specified length.
 
-        # Convert the hostname to punycode if it contains non-ASCII
-        hostname_ascii = parsed_url.hostname.encode('idna').decode('ascii')
+    This function includes a loop to ensure that the generated code
+    does not already exist in the database, preventing collisions.
 
-        # Rebuild the URL with ASCII hostname
-        parsed_url = parsed_url._replace(netloc=hostname_ascii + (":" + str(parsed_url.port) if parsed_url.port else ""))
-        ascii_url = urlunparse(parsed_url)
-
-        # Send request to TinyURL API
-        response = requests.get(TINYURL_API_ENDPOINT, params={'url': ascii_url})
-        response.raise_for_status()
+    Returns:
+        A unique short code string.
+    """
+    while True:
+        # Generate a random string of the specified length.
+        short_code = "".join(random.choices(CHARS, k=CODE_LENGTH))
         
-        return response.text
-
-    except requests.RequestException as e:
-        print(f"ERROR: Could not connect to TinyURL API. {e}")
-        return "Error: Could not shorten URL."
-    except Exception as e:
-        print(f"ERROR: Invalid URL or encoding issue. {e}")
-        return "Error: Could not shorten URL."
+        # Check if a ShortURL object with this code already exists.
+        if not ShortURL.objects.filter(short_code=short_code).exists():
+            # If it doesn't exist, we've found a unique code.
+            return short_code

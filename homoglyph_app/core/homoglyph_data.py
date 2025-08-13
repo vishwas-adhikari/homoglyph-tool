@@ -5,7 +5,7 @@ HOMOGLYPH_MAP = {}
 CANONICAL_MAP = {}
 
 def load_data_from_file():
-    """
+    """mana
     Loads the pre-built, clean homoglyph_map.json file and populates
     the master dictionaries for the application to use.
     """
